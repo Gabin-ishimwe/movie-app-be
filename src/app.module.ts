@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-import { BookmarkModule } from './bookmark/bookmark.module';
+import { BookModule } from './book/book.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import authConfig from './config/authConfig';
@@ -14,7 +14,7 @@ import authConfig from './config/authConfig';
     }),
     AuthModule,
     UserModule,
-    BookmarkModule,
+    BookModule,
     PrismaModule,
   ],
 })

@@ -18,14 +18,22 @@ model User {
   password String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  books Book[]
+  articles Article[]
 }
 
-model Book {
+model Category {
+  id Int @id @default(autoincrement())
+  name String @unique()
+  article Article[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Article {
   id Int @id @default(autoincrement())
   title String
-  description String?
-  link String?
+  description String
+  image String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId Int
@@ -34,10 +42,4 @@ model Book {
   category Category @relation(fields: [categoryId], references: [id])
 }
 
-model Category {
-  id Int @id @default(autoincrement())
-  name String @unique()
-  books Book[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
+

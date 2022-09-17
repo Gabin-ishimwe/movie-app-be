@@ -5,6 +5,7 @@ import { BookModule } from './book/book.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { CategoryModule } from './category/category.module';
+import { BlogModule } from './blog/blog.module';
 import authConfig from './config/authConfig';
 
 @Module({
@@ -18,6 +19,7 @@ import authConfig from './config/authConfig';
     BookModule,
     CategoryModule,
     PrismaModule,
+    BlogModule,
   ],
 })
 export class AppModule {}

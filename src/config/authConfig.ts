@@ -5,4 +5,5 @@ export default () => ({
   cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
   cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
   cloudinaryApiEnvVariable: process.env.CLOUDINARY_API_ENV_VARIABLE,
+  port: process.env.PORT,
 });

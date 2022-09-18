@@ -17,13 +17,16 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { BlogService } from './blog.service';
-import { CreateBlogDto } from './dto/create-blog.dto';
+import { CreateBlogDto, FileUploadDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { uploadImage } from '../helpers/imageUpload';
 import { CategoryService } from '../category/category.service';
 import { JwtAuthGuard } from '../auth/strategy';
 import { GetUser } from 'src/auth/decorator';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Blog')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('blog')
 export class BlogController {
@@ -34,6 +37,7 @@ export class BlogController {
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
+  @ApiConsumes('multipart/form-data')
   async create(
     @Body() createBlogDto: CreateBlogDto,
     @UploadedFile() file: Express.Multer.File,
@@ -80,6 +84,7 @@ export class BlogController {
   }
 
   @Patch(':id')
+  @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('image'))
   async update(
     @Param('id', ParseIntPipe) id: number,

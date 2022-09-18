@@ -11,6 +11,7 @@ async function bootstrap() {
     }),
   );
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('Blog API')
     .setDescription('The blog API project')
     .setVersion('1.0')

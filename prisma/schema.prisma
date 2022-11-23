@@ -10,36 +10,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Movie {
   id Int @id @default(autoincrement())
-  firstname String
-  lastname String
-  email String @unique
-  password String
+  title String
+  description String
+  rating Int
+  image String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  articles Article[]
+  categories CategoriesOnMovie[]
 }
 
 model Category {
   id Int @id @default(autoincrement())
   name String @unique()
-  article Article[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  movies CategoriesOnMovie[]
 }
 
-model Article {
-  id Int @id @default(autoincrement())
-  title String
-  description String
-  image String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId Int
-  user User @relation(fields: [userId], references: [id])
-  categoryId Int
+model CategoriesOnMovie {
+  movie Movie @relation(fields: [movieId], references: [id])
+  movieId Int 
   category Category @relation(fields: [categoryId], references: [id])
+  categoryId Int 
+  assignedAt DateTime @default(now())
+  @@id([movieId, categoryId])
 }
 
 

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsIn, IsInt, IsNotEmpty, IsString, Max, Min } from 'class-validator';
 
-export class CreateBlogDto {
+export class CreateMovieDto {
   @ApiProperty({
     description: 'title',
   })
@@ -18,6 +18,12 @@ export class CreateBlogDto {
 
   @ApiProperty({ type: 'string', format: 'binary' })
   image: any;
+
+  @ApiProperty({
+    description: 'rating',
+  })
+  @IsString()
+  rating: string;
 
   @ApiProperty({
     description: 'category Id',

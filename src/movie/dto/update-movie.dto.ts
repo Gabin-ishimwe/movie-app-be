@@ -1,9 +1,9 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateBlogDto } from './create-blog.dto';
+import { CreateMovieDto } from './create-movie.dto';
 import { IsEmpty, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateBlogDto extends PartialType(CreateBlogDto) {
+export class UpdateMovieDto extends PartialType(CreateMovieDto) {
   @ApiProperty({
     description: 'title',
   })
@@ -18,4 +18,9 @@ export class UpdateBlogDto extends PartialType(CreateBlogDto) {
 
   @ApiProperty({ type: 'string', format: 'binary', required: false })
   image: any;
+
+  @ApiProperty({
+    description: 'rating',
+  })
+  rating: string;
 }

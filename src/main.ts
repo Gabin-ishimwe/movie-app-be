@@ -12,9 +12,8 @@ async function bootstrap() {
     }),
   );
   const config = new DocumentBuilder()
-    .addBearerAuth()
-    .setTitle('Blog API')
-    .setDescription('The blog API project')
+    .setTitle('Movie App API')
+    .setDescription('The Movie API project')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);

@@ -1,37 +1,32 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
   UseInterceptors,
   UploadedFile,
-  ParseFilePipeBuilder,
   ForbiddenException,
-  UseGuards,
   HttpException,
-  ParseIntPipe,
+  Get,
   NotFoundException,
+  Param,
+  ParseIntPipe,
+  Delete,
+  ParseFilePipeBuilder,
+  Patch,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { BlogService } from './blog.service';
-import { CreateBlogDto, FileUploadDto } from './dto/create-blog.dto';
-import { UpdateBlogDto } from './dto/update-blog.dto';
+import { MovieService } from './movie.service';
+import { CreateMovieDto } from './dto/create-movie.dto';
 import { uploadImage } from '../helpers/imageUpload';
 import { CategoryService } from '../category/category.service';
-import { JwtAuthGuard } from '../auth/strategy';
-import { GetUser } from 'src/auth/decorator';
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { UpdateMovieDto } from './dto/update-movie.dto';
 
-@ApiTags('Blog')
-@ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
-@Controller('blog')
-export class BlogController {
+@ApiTags('Movie')
+@Controller('movie')
+export class MovieController {
   constructor(
-    private readonly blogService: BlogService,
+    private readonly movieService: MovieService,
     private readonly categoryService: CategoryService,
   ) {}
 
@@ -39,27 +34,27 @@ export class BlogController {
   @UseInterceptors(FileInterceptor('image'))
   @ApiConsumes('multipart/form-data')
   async create(
-    @Body() createBlogDto: CreateBlogDto,
+    @Body() createMovieDto: CreateMovieDto,
     @UploadedFile() file: Express.Multer.File,
-    @GetUser('userId') id: string,
   ) {
     try {
-      const { title, description, categoryId } = createBlogDto;
-      const category = await this.categoryService.findId(parseInt(categoryId));
+      const { title, description, categoryId, rating } = createMovieDto;
+      const category = await this.categoryService.findId(
+        parseInt(categoryId, 10),
+      );
       if (!category) {
         throw new ForbiddenException('Category not found');
       }
       const imageUpload = await uploadImage(file);
       const image = imageUpload.secure_url;
-      const userId = id;
-      const blog = await this.blogService.create({
+      const movie = await this.movieService.create({
         title,
         description,
         image,
-        userId: parseInt(userId),
-        categoryId: parseInt(categoryId),
+        rating: parseInt(rating, 10),
+        categoryId: parseInt(categoryId, 10),
       });
-      return blog;
+      return movie;
     } catch (error) {
       console.log(error);
       if (error.message) {
@@ -71,16 +66,16 @@ export class BlogController {
 
   @Get()
   findAll() {
-    return this.blogService.findAll();
+    return this.movieService.findAll();
   }
 
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    const blog = await this.blogService.findOne(id);
-    if (!blog) {
-      throw new NotFoundException('Blog not found');
+    const movie = await this.movieService.findOne(id);
+    if (!movie) {
+      throw new NotFoundException('Movie not found');
     }
-    return blog;
+    return movie;
   }
 
   @Patch(':id')
@@ -90,25 +85,26 @@ export class BlogController {
     @Param('id', ParseIntPipe) id: number,
     @UploadedFile(new ParseFilePipeBuilder().build({ fileIsRequired: false }))
     file: Express.Multer.File,
-    @Body() updateBlogDto: UpdateBlogDto,
+    @Body() updateMovieDto: UpdateMovieDto,
   ) {
     try {
       let image;
-      const { title, description } = updateBlogDto;
-      const blog = await this.blogService.findOne(id);
-      if (!blog) {
-        throw new ForbiddenException('Blog not found');
+      const { title, description, rating } = updateMovieDto;
+      const movie = await this.movieService.findOne(id);
+      if (!movie) {
+        throw new ForbiddenException('Movie not found');
       }
       if (file) {
         const imageUpload = await uploadImage(file);
         image = imageUpload.secure_url;
       }
-      const updateBlog = await this.blogService.update(id, {
+      const updateMovie = await this.movieService.update(id, {
         title,
         description,
         image,
+        rating: parseInt(rating, 10),
       });
-      return updateBlog;
+      return updateMovie;
     } catch (error) {
       console.log(error);
       if (error.message) {
@@ -120,10 +116,11 @@ export class BlogController {
 
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number) {
-    const deleteBlog = await this.blogService.remove(id);
-    if (!deleteBlog) {
-      throw new NotFoundException('Blog not found');
+    const movie = await this.movieService.findOne(id);
+    if (!movie) {
+      throw new NotFoundException('Movie not found');
     }
-    return deleteBlog;
+    const deleteMovie = await this.movieService.remove(id);
+    return deleteMovie;
   }
 }

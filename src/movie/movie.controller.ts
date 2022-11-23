@@ -13,14 +13,23 @@ import {
   Delete,
   ParseFilePipeBuilder,
   Patch,
+  Query,
+  UsePipes,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MovieService } from './movie.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { uploadImage } from '../helpers/imageUpload';
 import { CategoryService } from '../category/category.service';
-import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { UpdateMovieDto } from './dto/update-movie.dto';
+import { Prisma } from '@prisma/client';
+import { RankValidationPipe } from './pipe/rankPipe';
+
+enum operations {
+  asc = 'asc',
+  desc = 'desc',
+}
 
 @ApiTags('Movie')
 @Controller('movie')
@@ -62,6 +71,13 @@ export class MovieController {
       }
       throw new HttpException('Server error', 500);
     }
+  }
+
+  @Get('rank')
+  @ApiQuery({ name: 'op', enum: operations })
+  @UsePipes(RankValidationPipe)
+  async rankMovie(@Query('op') operation: Prisma.SortOrder) {
+    return this.movieService.rankMovie(operation);
   }
 
   @Get()

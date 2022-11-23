@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 
 export interface CreateMovie {
@@ -45,6 +46,23 @@ export class MovieService {
 
   findAll() {
     return this.prisma.movie.findMany({
+      include: {
+        categories: {
+          select: {
+            category: true,
+          },
+        },
+      },
+    });
+  }
+
+  rankMovie(op: Prisma.SortOrder) {
+    return this.prisma.movie.findMany({
+      orderBy: [
+        {
+          rating: op,
+        },
+      ],
       include: {
         categories: {
           select: {

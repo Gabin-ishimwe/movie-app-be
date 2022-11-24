@@ -6,36 +6,35 @@ const prisma = new PrismaClient();
 async function main() {
   await Promise.all(
     categories.map((category) =>
-      prisma.category.upsert({
-        where: {
-          id: category.id,
+      prisma.category.create({
+        data: {
+          name: category.name,
         },
-        update: {},
-        create: category,
       }),
     ),
   );
 
-  await Promise.all(
-    movies.map((movie) =>
-      prisma.movie.upsert({
-        where: {
-          id: movie.id,
-        },
-        update: {},
-        create: movie,
-      }),
-    ),
-  );
+  // await Promise.all(
+  //   movies.map((movie) =>
+  //     prisma.movie.upsert({
+  //       where: {
+  //         id: movie.id,
+  //       },
+  //       update: {},
+  //       create: movie,
+  //     }),
+  //   ),
+  // );
 
   await Promise.all(
     movies.map((movie) =>
-      prisma.movie.upsert({
-        where: {
-          id: movie.id,
+      prisma.movie.create({
+        data: {
+          title: movie.title,
+          description: movie.description,
+          rating: movie.rating,
+          image: movie.image,
         },
-        update: {},
-        create: movie,
       }),
     ),
   );

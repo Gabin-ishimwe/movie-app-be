@@ -1,50 +1,50 @@
 export const categories = [
   {
-    id: 1,
+    // id: 1,
     name: 'action',
   },
   {
-    id: 2,
+    // id: 2,
     name: 'marvel',
   },
   {
-    id: 3,
+    // id: 3,
     name: 'horror',
   },
   {
-    id: 4,
+    // id: 4,
     name: 'comedy',
   },
   {
-    id: 5,
+    // id: 5,
     name: 'scifi',
   },
 ];
 
 export const movies = [
   {
-    id: 1,
+    // id: 1,
     title: 'avenger infinity war',
     description: 'last avengers film...',
     rating: 9,
     image: '',
   },
   {
-    id: 2,
+    // id: 2,
     title: 'doctor strange',
     description: 'last avengers film...',
     rating: 8,
     image: '',
   },
   {
-    id: 3,
+    // id: 3,
     title: 'aquaman',
     description: 'dc comics film...',
     rating: 5,
     image: 'null',
   },
   {
-    id: 4,
+    // id: 4,
     title: 'wonder woman',
     description: 'dc comics film...',
     rating: 4,

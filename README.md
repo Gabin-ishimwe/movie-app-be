@@ -39,6 +39,18 @@ Start the server
   yarn run start:dev
 ```
 
+Run Tests
+
+```bash
+  yarn run test
+```
+
+Run Tests Coverage
+
+```bash
+  yarn run test:cov
+```
+
 
 ## Features
 

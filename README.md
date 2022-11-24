@@ -1,4 +1,5 @@
 ## Movie App BE
+[![Deploy Movie-db Be](https://github.com/Gabin-ishimwe/movie-app-be/actions/workflows/main.yml/badge.svg)](https://github.com/Gabin-ishimwe/movie-app-be/actions/workflows/main.yml)
 ## Deployment
 
 

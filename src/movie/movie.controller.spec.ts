@@ -52,18 +52,6 @@ describe('Movie Controller', () => {
   it('should retrieve all movies', () => {
     expect(movieController.findAll()).toEqual([]);
   });
-  // it('should create category', async () => {
-  //   const res = await categoryController.create({ name: 'actons' });
-  //   expect(res).toHaveProperty('name');
-  // });
-  // it('should update category', async () => {
-  //   const dto = { name: 'action' };
-  //   const res = await categoryController.update(1, dto);
-  //   expect(res).toEqual({
-  //     id: 1,
-  //     ...dto,
-  //   });
-  // });
   it('should retrieve one movie', async () => {
     const res = await movieController.findOne(1);
     expect(res).toEqual({

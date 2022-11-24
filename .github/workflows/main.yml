@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: '14.x'
       - name: Install dependencies
-        run: yarn install install
+        run: yarn install
       - name: yarn run test:cov
         run: npm test
   deploy:

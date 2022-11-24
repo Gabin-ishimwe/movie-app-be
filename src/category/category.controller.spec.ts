@@ -10,7 +10,7 @@ describe('Category Controller', () => {
     findAll: jest.fn(() => {
       return [];
     }),
-    findOne: jest.fn(() => {
+    findOne: jest.fn((id) => {
       return null;
     }),
     create: jest.fn((dto) => {
@@ -24,9 +24,12 @@ describe('Category Controller', () => {
     }),
     findId: jest.fn((id) => {
       return {
-        id: 1,
-        name: 'category',
+        id,
+        name: 'action',
       };
+    }),
+    remove: jest.fn((id) => {
+      return id;
     }),
   };
   beforeEach(async () => {
@@ -40,22 +43,30 @@ describe('Category Controller', () => {
     categoryController = moduleRef.get<CategoryController>(CategoryController);
   });
 
-  it('should test category controller', () => {
-    expect(categoryController).toBeDefined();
-  });
   it('should retrieve all categories', () => {
     expect(categoryController.findAll()).toEqual([]);
   });
-  it('should create category', () => {
-    expect(categoryController.create({ name: 'action' })).toEqual({
+  it('should create category', async () => {
+    const res = await categoryController.create({ name: 'actons' });
+    expect(res).toHaveProperty('name');
+  });
+  it('should update category', async () => {
+    const dto = { name: 'action' };
+    const res = await categoryController.update(1, dto);
+    expect(res).toEqual({
+      id: 1,
+      ...dto,
+    });
+  });
+  it('should retrieve one category', async () => {
+    const res = await categoryController.findOne(1);
+    expect(res).toEqual({
+      id: 1,
       name: 'action',
     });
   });
-  // it('should update category', () => {
-  //   const dto = { name: 'category' };
-  //   expect(categoryController.update(1, dto)).toEqual({
-  //     id: 1,
-  //     ...dto,
-  //   });
-  // });
+  it('should delete category', async () => {
+    const res = await categoryController.remove(1);
+    expect(res).toEqual(1);
+  });
 });

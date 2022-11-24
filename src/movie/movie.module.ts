@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { MovieController } from './movie.controller';
-import { CategoryModule } from 'src/category/category.module';
+import { CategoryModule } from '../category/category.module';
 import { CategoryController } from 'src/category/category.controller';
 
 @Module({

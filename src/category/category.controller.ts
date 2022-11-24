@@ -43,7 +43,7 @@ export class CategoryController {
     if (!findCategory) {
       throw new NotFoundException("Category doesn't exist");
     }
-    return this.categoryService.findId(id);
+    return findCategory;
   }
 
   @Patch(':id')
@@ -60,7 +60,6 @@ export class CategoryController {
 
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number) {
-    console.log(typeof id);
     const findCategory = await this.categoryService.findId(id);
     if (!findCategory) {
       throw new NotFoundException("Category doesn't exist");

@@ -17,7 +17,7 @@
 Clone the project
 
 ```bash
-  git clone https://github.com/Gabin-ishimwe/demo-credit-app.git
+  https://github.com/Gabin-ishimwe/movie-app-be.git
 ```
 
 Go to the project directory

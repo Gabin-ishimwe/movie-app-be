@@ -4,13 +4,13 @@
 
 
 ```bash
-  https://movie-db-be.herokuapp.com/
+  https://movie-app-be-production.up.railway.app/
 ```
 
 
 ## API Documentation
 - Database ER Diagram: [ER Diagram](https://lucid.app/lucidchart/deda732d-7324-4b81-9dc6-bc21ed9529e9/edit?viewport_loc=143%2C40%2C1449%2C717%2C0_0&invitationId=inv_c3bdf92c-7a03-4d35-ba9b-7090b5eaee25)
-- Swagger Documentation: [Documentation](https://movie-db-be.herokuapp.com/api)
+- Swagger Documentation: [Documentation](https://movie-app-be-production.up.railway.app/api#/)
 
 
 ## Run Locally
